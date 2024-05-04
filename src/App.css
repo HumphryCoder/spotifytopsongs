@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow-x: hidden; 
+    background-color: #FBF8F8;
+}
+
+.login-container {
+    width: 960px;
+    height: 1080px;
+    background-color: #1D1D20;
+    left: 960px;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-btn {
+    display: flex;
+    align-items: center;
+    width: 283px;
+    height: 44px;
+    border-radius: 25px;
+    border-style: none;
+    background-color: #FBF8F8;
+    color: #1D1D20;
+    font-size: 17px;
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.spotify-logo {
+    display: flex;
+    position: relative;
+    margin-left: 25px;
+    margin-right: 12px;
+}
+
+.catch-phrase {
+    background-image: linear-gradient(90deg, #FBF8F8, #959393);
+    background-clip: text;
+    color: transparent;
+    font-family: "Inter", sans-serif;
+    display: flex;
+    text-align: center;
+    font-size: 36px;
+    position: absolute;
+    top: 285px;
+    width: 650px;
+}
+
+
+
