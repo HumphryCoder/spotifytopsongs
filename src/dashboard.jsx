@@ -38,7 +38,7 @@ function Dashboard() {
             params.append("client_id", clientId);
             params.append("grant_type", "authorization_code");
             params.append("code", code);
-            params.append("redirect_uri", "http://localhost:5173/dashboard");
+            params.append("redirect_uri", "https://helsingdigital.vercel.app/dashboard");
             params.append("code_verifier", verifier);
 
             try {
