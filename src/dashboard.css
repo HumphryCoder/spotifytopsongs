@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+
+html, body {
+    background-color: #1D1D20; /* This will apply the background color to the entire page */
+    margin: 0;
+    padding: 0;
+    height: 100%; /* Ensure the html and body elements cover the entire content height */
+}
+
+.navbar {
+    width: 100%;
+    height: 60px;
+    background-color: transparent;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    
+}
+
+.navbar ul {
+    display: flex;
+    justify-content: center;
+
+}
+
+.navbar li {
+    color: #16A5D1;
+    list-style-type: none;
+    margin: 0px 20px;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+}
+
+.toptracks {
+    position: absolute;
+    top: 100px;
+    
+   display: flex;
+   flex-direction: column;
+  
+   align-items: center;
+
+    
+}
+
+.trackImage {
+    margin-bottom: 180px;
+    height: 320px;
+    width: 320px;
+}

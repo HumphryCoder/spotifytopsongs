@@ -10,7 +10,7 @@ const developmentUrl = "http://localhost:5173/dashboard"
 
 function loginpage() {
 
-  const redirectUrl = productionUrl;
+  const redirectUrl = developmentUrl;
 
   useEffect(() => {
     const refreshToken = localStorage.getItem("refresh_token");

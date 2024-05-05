@@ -1,33 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import "./dashboard.css"
 const clientId = "6e3a0b362aba4ea595706af76163c25a";
-const productionUrl = "https://helsingdigital.vercel.app/dashboard" 
+const productionUrl = "https://helsingdigital.vercel.app/dashboard"
 const developmentUrl = "http://localhost:5173/dashboard"
+
 
 function Dashboard() {
     const [topTracks, setTopTracks] = useState([]);
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
-    const redirectUrl = productionUrl;
+    const redirectUrl = developmentUrl;
 
     useEffect(() => {
         const storedAccessToken = localStorage.getItem("access_token");
         const code = searchParams.get('code');
         const error = searchParams.get('error');
 
-       
+
         if (error === 'access_denied') {
             console.log("sending you to landingpage");
-            navigate('/loginpage'); 
+            navigate('/loginpage');
         }
 
         if (storedAccessToken) {
             fetchTopTracks(storedAccessToken).catch(error => {
-                
+
                 if (error.status === 401) {
-                    
-                    navigate('/loginpage'); 
+
+                    navigate('/loginpage');
                 }
             });
         } else if (code) {
@@ -38,7 +40,7 @@ function Dashboard() {
                 }
             });
         }
-    }, [searchParams, navigate]); 
+    }, [searchParams, navigate]);
 
     const getAccessToken = async (clientId, code) => {
         const verifier = localStorage.getItem("verifier");
@@ -99,8 +101,10 @@ function Dashboard() {
         }
     };
 
+
     const renderTopTracks = () => {
         return topTracks.map(({ name, album }, index) => (
+            
             <div key={index}>
                 <img className='trackImage' src={album.images[0].url} alt={`Album cover for ${name}`} />
             </div>
@@ -109,8 +113,17 @@ function Dashboard() {
 
     return (
         <>
-            <h1>Hej min guys</h1>
-            {renderTopTracks()}
+            <div className='background1'>
+                <div className='navbar'>
+                    <ul>
+                            <>
+                            <li>Top Artist</li>
+                            <div className='toptracks'>{renderTopTracks()}</div>
+                            </>
+                    </ul>
+                </div>
+            </div>
+            
         </>
     )
 }
