@@ -11,7 +11,7 @@ function Dashboard() {
     const [topTracks, setTopTracks] = useState([]);
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
-    const redirectUrl = developmentUrl;
+    const redirectUrl = productionUrl;
 
     useEffect(() => {
         const storedAccessToken = localStorage.getItem("access_token");
