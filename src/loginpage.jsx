@@ -4,54 +4,56 @@ import './App.css';
 import logo from './logo.png';
 import { useSearchParams } from 'react-router-dom';
 const clientId = "6e3a0b362aba4ea595706af76163c25a";
-
+const productionUrl = "https://helsingdigital.vercel.app/dashboard" 
+const developmentUrl = "http://localhost:5173/dashboard"
 
 
 function loginpage() {
 
+  const redirectUrl = productionUrl;
 
   useEffect(() => {
-    const refreshToken = localStorage.getItem("refreshToken");
+    const refreshToken = localStorage.getItem("refresh_token");
     if (refreshToken) {
       // Call the function to refresh the access token
-      refreshaccessToken(refreshToken);
+      getRefreshToken();
     }
     // If there's no refresh token, the user will have to log in again
   }, []);
 
-  const refreshaccessToken = async () => {
-    const refresh_token = localStorage.getItem("refreshToken");
-    if (!refresh_token) {
-      // If there is no refresh token, you need to start the authentication process again.
-      redirectToAuthCodeFlow();
-      return;
-    }
-
-    const params = new URLSearchParams();
-    params.append("client_id", clientId);
-    params.append("grant_type", "refresh_token");
-    params.append("refresh_token", refresh_token);
-
+  const getRefreshToken = async () => {
+    const refreshToken = localStorage.getItem('refresh_token');
+    const url = "https://accounts.spotify.com/api/token";
+  
+    const payload = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: new URLSearchParams({
+        grant_type: 'refresh_token',
+        refresh_token: refreshToken,
+        client_id: clientId
+      }),
+    };
+  
     try {
-      const response = await fetch("https://accounts.spotify.com/api/token", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: params,
-      });
-
+      const response = await fetch(url, payload);
       if (!response.ok) {
-        throw new Error(`Failed to refresh access token: ${response.status} - ${response.statusText}`);
+        // If the response is not OK, and the status is 400, it could mean the refresh token is invalid or expired
+        if (response.status === 400) {
+          // Clear the stored tokens
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('refresh_token');
+        
+          
+        }
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-
-      const { access_token } = await response.json();
-      localStorage.setItem("accessToken", access_token);
-      return access_token;
+      const data = await response.json();
+      localStorage.setItem('access_token', data.access_token);
     } catch (error) {
-      console.error("Error refreshing access token:", error);
-      // If the refresh token is invalid or expired, start the authentication process again.
-      redirectToAuthCodeFlow();
+      console.error('There was an error refreshing the access token:', error);
     }
   };
 
@@ -64,7 +66,7 @@ function loginpage() {
     const params = new URLSearchParams();
     params.append("client_id", clientId);
     params.append("response_type", "code");
-    params.append("redirect_uri", "https://helsingdigital.vercel.app/dashboard");
+    params.append("redirect_uri", redirectUrl);
     params.append("scope", "user-read-private user-read-email user-top-read");
     params.append("code_challenge_method", "S256");
     params.append("code_challenge", challenge);
